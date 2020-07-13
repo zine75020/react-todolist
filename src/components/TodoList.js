@@ -69,37 +69,38 @@ export default class TodoList extends React.Component {
     return (
       <div>
         <TodoForm className="form" onSubmit={this.addTodo} />
-        {todos.map((todo) => (
-          <Todo
-            key={todo.id}
-            toggleComplete={() => this.toggleComplete(todo.id)}
-            onDelete ={() => this.handleDeleteTodo(todo.id)}
-            todo={todo}
-          />
-        ))}
-        <div>todos left: {this.state.todos.filter(todo => !todo.complete).length}</div>
+        <div className="todoleft">tâches restantes: {this.state.todos.filter(todo => !todo.complete).length}</div>
         <div className="buttons">
-            <Button id="all" variant="contained" color="primary" onClick={()=> this.updateTodoToShow("all")}>all</Button>
-            <Button id="active" variant="contained" color="primary" onClick={()=> this.updateTodoToShow("active")}>active</Button>
+            <Button id="all" variant="outlined" color="primary" onClick={()=> this.updateTodoToShow("all")}>all</Button>
+            <Button id="active" variant="contained" color="secondary" onClick={()=> this.updateTodoToShow("active")}>active</Button>
             <Button id="complete" variant="contained" color="primary" onClick={()=> this.updateTodoToShow("complete")}>complete</Button>
-        </div>
+        
         {this.state.todos.some(todo=> todo.complete) ? (
-        <div>
-            <button onClick={this.removeAllComplete}>
+            <Button id="removecomplete" variant="contained" color="primary" onClick={this.removeAllComplete}>
                 remove all complete
-            </button>
-        </div>
+            </Button>
         ) : null }
-        <div>
-            <button onClick={()=> this.setState({
+        </div>
+        <div className="allcomplete">
+            <Button  id="complete" variant="contained" color="primary" onClick={()=> this.setState({
                 todos : this.state.todos.map(todo => ({
                     ...todo,
                     complete : this.state.toggleAllComplete
                 })),
                 toggleAllComplete : !this.state.toggleAllComplete
 
-            })}>toggle all complete : {`${this.state.toggleAllComplete}`}</button>
+            })}>toggle all complete : {`${this.state.toggleAllComplete}`}</Button>
         </div>
+
+        {todos.map((todo) => (
+          <Todo className="liste"
+            key={todo.id}
+            toggleComplete={() => this.toggleComplete(todo.id)}
+            onDelete ={() => this.handleDeleteTodo(todo.id)}
+            todo={todo}
+          />
+          
+        ))}
       </div>
     );
   }
